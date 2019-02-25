@@ -7,7 +7,7 @@ web:
     url: https://google.com
     expectedCode: 200
     # naame url ExpCode RcvCode
-    msg: "<b>WARNING</b>\n<code>Host:</code>    <a href='{.URL}'>{.Name}</a>\n<code>Expected Code:</code>    <em>{.ExpCode}</em>\n<code>Got:</code>    <em>{.RcvCode}</em>\n"
+    msg: "<b>WARNING</b>\n<code>Host:</code>    <a href='{{.URL}}'>{{.Name}}</a>\n<code>Expected Code:</code>    <em>{{.ExpCode}}</em>\n<code>Got:</code>    <em>{{.RcvCode}}</em>\n"
     headers:
       - key: Auth
         value: "abc"

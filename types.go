@@ -11,12 +11,6 @@ type WebResource struct {
 	Msg          string `yaml:"msg"`
 }
 
-type Data struct {
-	expected       map[string]int
-	msgs           map[string]string
-	interval       time.Duration
-	repeatDuration time.Duration
-}
 
 type Response struct {
 	name string

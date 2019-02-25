@@ -16,8 +16,7 @@ type Config struct {
 		Token string `yaml:"token"`
 		Chats []int  `yaml:"chats"`
 	} `yaml:"tlg"`
-	Web  []WebResource `yaml:"web"`
-	data Data
+	Web []WebResource `yaml:"web"`
 }
 
 func ParseConfig(filename string) *Config {
@@ -30,22 +29,22 @@ func ParseConfig(filename string) *Config {
 		panic(err)
 	}
 
-	codes := make(map[string]int, 0)
-	msgs := make(map[string]string, 0)
-	for _, w := range cfg.Web {
-		codes[w.Name] = w.ExpectedCode
-		msgs[w.Name] = w.Msg
-	}
-	cfg.data.expected = codes
-	cfg.data.msgs = msgs
+	//codes := make(map[string]int, 0)
+	//msgs := make(map[string]string, 0)
+	//for _, w := range cfg.Web {
+	//	codes[w.Name] = w.ExpectedCode
+	//	msgs[w.Name] = w.Msg
+	//}
+	//cfg.data.expected = codes
+	//cfg.data.msgs = msgs
 
-	dur, err := time.ParseDuration(cfg.Global.Repeat)
-	must(err)
-	cfg.data.repeatDuration = dur
+	//dur, err := time.ParseDuration(cfg.Global.Repeat)
+	//must(err)
+	//cfg.data.repeatDuration = dur
 
-	dur, err = time.ParseDuration(cfg.Global.Interval)
-	must(err)
-	cfg.data.interval = dur
+	//dur, err = time.ParseDuration(cfg.Global.Interval)
+	//must(err)
+	//cfg.data.interval = dur
 
 	return cfg
 }
