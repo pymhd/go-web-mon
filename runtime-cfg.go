@@ -1,6 +1,8 @@
 package main
 
-import ()
+import (
+	"time"
+)
 
 /*
 type MessageRenderer struct {
@@ -37,12 +39,11 @@ func CreateRuntimeConfig(c *Config) *RuntimeConfig {
 
 	for i, w := range c.Web {
 		rc.codes[i] = w.ExpectedCode
-		rc.messgae[i] = w.Msg
-		objects[i] = w.URL
+		rc.messages[i] = w.Msg
+		rc.objects[i] = w.URL
 	}
 	return rc
 }
-
 
 /*
 func mustRenderMessage(s string, i interface{}) string {

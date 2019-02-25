@@ -11,7 +11,6 @@ type WebResource struct {
 	Msg          string `yaml:"msg"`
 }
 
-
 type Response struct {
 	name string
 	code int
