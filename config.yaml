@@ -3,30 +3,18 @@ global:
   repeat: 15m
   workers: 30
 web:
-  - name: Prod Landing Page
-    url: https://custody.bankex.com    
+  - name: Main Page
+    url: https://google.com
     expectedCode: 200
-    msg: "<b>WARNING</b>\n<code>Host:</code>    <a href='https://custody.bankex.com'>%s</a>\n<code>Expected Code:</code>    <em>%d</em>\n<code>Got:</code>    <em>%d</em>\n"
+    # naame url ExpCode RcvCode
+    msg: "<b>WARNING</b>\n<code>Host:</code>    <a href='{.URL}'>{.Name}</a>\n<code>Expected Code:</code>    <em>{.ExpCode}</em>\n<code>Got:</code>    <em>{.RcvCode}</em>\n"
     headers:
       - key: Auth
         value: "abc"
     
 
-  - name: Tech Landing Page
-    url: https://custody-dev.bkxtech.com    
-    expectedCode: 200
-    msg: "<b>WARNING</b>\n<code>Host:</code>    <a href='https://custody-dev.bkxtech.com'>%s</a>\n<code>Expected Code:</code>    <em>%d</em>\n<code>Got:</code>    <em>%d</em>\n"
-    
-  - name: Main Bankex Web Page
-    url: https://bankex.com    
-    expectedCode: 200
-    msg: "<b>WARNING</b>\n<code>Host:</code>    <a href='https://bankex.com'>%s</a>\n<code>Expected Code:</code>    <em>%d</em>\n<code>Got:</code>    <em>%d</em>\n"
-
 tlg:
   token: TOKEN
   chats:
     - 93999207  #George K
-    - 82052103  #Stanislav Z
-    - 678775    #Alexander B
-    - 1311538   #Alexey M
         
