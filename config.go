@@ -5,6 +5,17 @@ import (
 	"io/ioutil"
 )
 
+type WebResource struct {
+	Name         string                 `yaml:"name"`
+	URL          string                 `yaml:"url"`
+	ExpectedCode int                    `yaml:"expectedCode"`
+	Msg          string                 `yaml:"msg"`
+	Interval     string                 `yaml:"interval"`
+	Retry        int                    `yaml:"retry"`
+	Timeout      string                 `yaml:"timeout"`
+	Labels       map[string]interface{} `yaml:"labels"`
+}
+
 type Config struct {
 	Global struct {
 		Interval string `yaml:"interval"`
@@ -27,23 +38,6 @@ func ParseConfig(filename string) *Config {
 	if err := yaml.Unmarshal(fb, cfg); err != nil {
 		panic(err)
 	}
-
-	//codes := make(map[string]int, 0)
-	//msgs := make(map[string]string, 0)
-	//for _, w := range cfg.Web {
-	//	codes[w.Name] = w.ExpectedCode
-	//	msgs[w.Name] = w.Msg
-	//}
-	//cfg.data.expected = codes
-	//cfg.data.msgs = msgs
-
-	//dur, err := time.ParseDuration(cfg.Global.Repeat)
-	//must(err)
-	//cfg.data.repeatDuration = dur
-
-	//dur, err = time.ParseDuration(cfg.Global.Interval)
-	//must(err)
-	//cfg.data.interval = dur
 
 	return cfg
 }

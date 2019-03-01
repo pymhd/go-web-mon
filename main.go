@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	_ "fmt"
 )
 
 var (
@@ -14,5 +14,5 @@ func main() {
 	flag.Parse()
 	cfg := ParseConfig(*confFile)
 	rc = CreateRuntimeConfig(cfg)
-	fmt.Println(rc)
 }
+

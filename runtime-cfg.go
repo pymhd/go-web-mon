@@ -4,22 +4,13 @@ import (
 	"time"
 )
 
-/*
-type MessageRenderer struct {
-	URL     string
-	Name    string
-	ExpCode int
-	RcvCode int
-}
-*/
-
 type RuntimeConfig struct {
-	workers  int
-	interval time.Duration
-	repeat   time.Duration
-	messages map[int]string
-	codes    map[int]int
-	objects  []string
+	workers   int
+	repeat	  time.Duration
+	intervals map[int]time.Duration
+	messages  map[int]string
+	codes     map[int]int
+	objects   []string
 }
 
 func CreateRuntimeConfig(c *Config) *RuntimeConfig {
@@ -28,6 +19,7 @@ func CreateRuntimeConfig(c *Config) *RuntimeConfig {
 	rc.messages = make(map[int]string, 0)
 	rc.codes = make(map[int]int, 0)
 	rc.objects = make([]string, len(c.Web))
+	rc.tickers = make(map[int]time.Ticker, 0)
 
 	dur, err := time.ParseDuration(c.Global.Repeat)
 	must(err)
@@ -41,7 +33,11 @@ func CreateRuntimeConfig(c *Config) *RuntimeConfig {
 		rc.codes[i] = w.ExpectedCode
 		rc.messages[i] = w.Msg
 		rc.objects[i] = w.URL
+		
+		ticker := time.NewTicker(w.Interval)
+		rc.tickers[i] = ticker
 	}
+	
 	return rc
 }
 
