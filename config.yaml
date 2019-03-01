@@ -3,7 +3,7 @@ global:
   repeat: 15m
   workers: 30
 web:
-  - name: Main Page
+  main_page:
     url: https://google.com
     expectedCode: 200
     labels:
@@ -14,10 +14,10 @@ web:
     headers:
       - key: Auth
         value: "abc"
-    
+  app_page:
+    url:    
 
 tlg:
   token: TOKEN
   chats:
     - 93999207  #George K
-        

@@ -13,6 +13,12 @@ var (
 func main() {
 	flag.Parse()
 	cfg := ParseConfig(*confFile)
-	rc = CreateRuntimeConfig(cfg)
+	
+	for i, wr := range cfg.Web {
+		time 
+	}
 }
 
+
+// for 1 s ticker check if this web resource need to be pushed to chan
+// 

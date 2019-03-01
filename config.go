@@ -26,8 +26,9 @@ type Config struct {
 		Token string `yaml:"token"`
 		Chats []int  `yaml:"chats"`
 	} `yaml:"tlg"`
-	Web []WebResource `yaml:"web"`
+	Web map[string]WebResource `yaml:"web"`
 }
+
 
 func ParseConfig(filename string) *Config {
 	cfg := new(Config)
