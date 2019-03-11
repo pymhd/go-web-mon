@@ -3,22 +3,24 @@ package main
 import (
 	"flag"
 	_ "fmt"
+	"time"
 )
 
 var (
 	confFile = flag.String("config", "./config.yaml", "specify config file")
-	rc       *RuntimeConfig
+	cfg *Config
 )
 
 func main() {
 	flag.Parse()
-	cfg := ParseConfig(*confFile)
+	cfg = ParseConfig(*confFile)
 	
-	for i, wr := range cfg.Web {
-		time 
+	inputChan := runWorkers(5)
+	
+	ticker := time.NewTicker(1 * time.Second)
+	for range  ticker.C {
+		for _, wr := range cfg.Web {
+			inputChan <- wr		
+		}
 	}
 }
-
-
-// for 1 s ticker check if this web resource need to be pushed to chan
-// 

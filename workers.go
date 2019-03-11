@@ -13,30 +13,32 @@ type Notification struct {
 type WebResourceResponse struct {
         Name		string
         StatusCode	int
+        ExpectedCode    int
         When		time.Time
         CodeReceived	bool
 }
 
 
-func runWorkers(c  int) {
-        i := make(chan WebResource)
-        o := make(chan WebResourceResponse)
+func runWorkers(c  int) (chan WebResource) {
+        in := make(chan WebResource)
+        out := make(chan WebResourceResponse)
         
         //deploy new status keeper with response channel that will be handeled by it's goroutines
-        sk := NewStatusKeeper(o)
+        sk := NewStatusKeeper(out)
         
-        for i < c; i++ {
-                go runWebResourceMonitor(i, o)
+        for i:= 0; i < c; i++ {
+                go runWebResourceMonitor(in, out)
         }
         //start tlg notificators = watchers / 10 ( for instance if all resources will go down simultaneously we will notify users in few threads)
-        var nc := 1
+        var nc = 1
         if x:= c/10; x >0  {
                 nc = x
         } 
         //start tlg notificators
-        for i < nc; i++ {
+        for i := 0; i < nc; i++ {
                 go runNotificator(sk.NotifyChan)
         }
+        return in
 }
 
 
@@ -44,13 +46,17 @@ func runWebResourceMonitor(in chan WebResource, out chan WebResourceResponse) {
         for wr := range in {
                 code, ok := getResponseCode(wr.URL, wr.Timeout)
                 now := time.Now()
-                out <- WebResourceResponse{Name: wr.Name, StatusCode: code, When: now, CodeReceived: ok}
+                out <- WebResourceResponse{Name: wr.Name, StatusCode: code, ExpectedCode: wr.ExpectedCode,  When: now, CodeReceived: ok}
         }
 }
 
 
 
-func getResponseCode(url string, timeout time.Duration) (int, bool) {
+func getResponseCode(url string, timeout string) (int, bool) {
+	tmt, err := time.ParseDuration(timeout)
+	if err != nil {
+	        tmt = time.Duration(3 * time.Second)
+	}
 	codes := make(chan int, 1)
 
 	go func(u string) {
@@ -64,10 +70,10 @@ func getResponseCode(url string, timeout time.Duration) (int, bool) {
 	}(url)
 
 	select {
-	case <- time.After(timeout):
-		return (0, false)
+	case <- time.After(tmt):
+		return 0, false
 	case code := <-codes:
-		return (code, true)
+		return code, true
 	}
 }
 
